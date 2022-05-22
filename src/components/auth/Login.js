@@ -1,9 +1,20 @@
 import React from "react";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.config";
 
 const Login = () => {
-  const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, user, loading] = useSignInWithGoogle(auth);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+  if(loading){
+    return <h1>Loading...</h1>
+  }
+  if (user) {
+    navigate(from, { replace: true });
+  }
 
   return (
     <div className="w-full place-items-center bg-cover bg-center grid min-h-full bg-base-100">
