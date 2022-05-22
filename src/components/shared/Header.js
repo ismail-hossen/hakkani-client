@@ -22,7 +22,7 @@ const Header = () => {
             <li><a>Submenu 2</a></li>
           </ul>
         </li>
-    <li><label for="my-drawer" onClick={()=> navigate('dashboard')} className="drawer-button">Dashboard</label></li>
+    <li><label htmlFor="my-drawer" onClick={()=> navigate('dashboard')} className="drawer-button">Dashboard</label></li>
       </ul>
     </div>
     <Link to='/' className="btn btn-ghost normal-case text-xl">HAKKANI</Link>
@@ -40,12 +40,12 @@ const Header = () => {
           <li><a>Submenu 2</a></li>
         </ul>
       </li>
-      <li><label for="my-drawer" onClick={()=> navigate('dashboard')} className="drawer-button">Dashboard</label></li>
+      <li><label htmlFor="my-drawer" onClick={()=> navigate('dashboard')} className="drawer-button">Dashboard</label></li>
 
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn">Login</a>
+    <Link to='login' className="btn">Login</Link>
   </div>
 </div>
   );

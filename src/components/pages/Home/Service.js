@@ -1,8 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 const Service = ({ lg, text, btn }) => {
-  const navigate = useNavigate();
   return (
     <div className={`card ${lg}card-side bg-base-100 shadow-xl`}>
       <figure>

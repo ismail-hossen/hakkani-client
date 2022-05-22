@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import Login from "./components/auth/Login";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import Dashboard from "./components/pages/dashboard/Dashboard";
 import MyOrders from "./components/pages/dashboard/MyOrders";
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home></Home>} />
         <Route path="/home" element={<Home></Home>} />
+        <Route path="/login" element={<Login></Login>} />
         <Route
           path="/place-order/:id"
           element={

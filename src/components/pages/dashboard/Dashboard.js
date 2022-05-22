@@ -9,7 +9,7 @@ const Dashboard = () => {
     <Outlet></Outlet>
   </div> 
   <div className="drawer-side">
-    <label for="my-drawer" className="drawer-overlay"></label>
+    <label htmlFor="my-drawer" className="drawer-overlay"></label>
     <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
       <li><a>My Orders</a></li>
       <li><a>Add A Review</a></li>
