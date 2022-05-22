@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Service = () => {
-  const navigate = useNavigate()
+const Service = ({ lg, text, btn }) => {
+  const navigate = useNavigate();
   return (
-    <div className="card card-side bg-base-100 shadow-xl">
+    <div className={`card ${lg}card-side bg-base-100 shadow-xl`}>
       <figure>
         <img
           src="https://api.lorem.space/image/movie?w=200&h=280"
@@ -17,11 +17,11 @@ const Service = () => {
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam,
           facere.
         </p>
-        <h2>Available Quantity: 20</h2>
-        <h2>Minimum Order: 5</h2>
+        <h2>Available Quantity: 750</h2>
+        <h2>{text}</h2>
         <h2>Price: $100</h2>
         <div className="card-actions justify-end">
-          <button onClick={() => navigate('/place-order/:id')} className="btn btn-primary">Place Order</button>
+          {btn}
         </div>
       </div>
     </div>

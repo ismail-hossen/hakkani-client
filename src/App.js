@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import PrivateRoute from "./components/auth/PrivateRoute";
 import Dashboard from "./components/pages/dashboard/Dashboard";
 import MyOrders from "./components/pages/dashboard/MyOrders";
 import Home from "./components/pages/Home/Home";
@@ -15,11 +16,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Home></Home>} />
         <Route path="/home" element={<Home></Home>} />
-        <Route path="/place-order/:id" element={<Purchase></Purchase>} />
+        <Route
+          path="/place-order/:id"
+          element={
+            <PrivateRoute>
+              <Purchase></Purchase>
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/dashboard" element={<Dashboard></Dashboard>} >
-<Route index element={<MyOrders></MyOrders>}></Route>
-          </Route>
+        <Route path="/dashboard" element={<Dashboard></Dashboard>}>
+          <Route index element={<MyOrders></MyOrders>}></Route>
+        </Route>
 
         <Route path="*" element={<NotFound></NotFound>} />
       </Routes>
