@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate()
   return (
     <div className="navbar bg-base-100">
   <div className="navbar-start">
@@ -21,10 +22,10 @@ const Header = () => {
             <li><a>Submenu 2</a></li>
           </ul>
         </li>
-        <li><a>Item 3</a></li>
+    <li><label for="my-drawer" onClick={()=> navigate('dashboard')} className="drawer-button">Dashboard</label></li>
       </ul>
     </div>
-    <a className="btn btn-ghost normal-case text-xl">HAKKANI</a>
+    <Link to='/' className="btn btn-ghost normal-case text-xl">HAKKANI</Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal p-0">
@@ -39,7 +40,8 @@ const Header = () => {
           <li><a>Submenu 2</a></li>
         </ul>
       </li>
-      <li><a>Item 3</a></li>
+      <li><label for="my-drawer" onClick={()=> navigate('dashboard')} className="drawer-button">Dashboard</label></li>
+
     </ul>
   </div>
   <div className="navbar-end">

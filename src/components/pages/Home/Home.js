@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div>
       <Carousel></Carousel>
-      <div className="flex w-5/6 mx-auto">
+      <div className="flex w-5/6 mx-auto gap-4">
       <Service></Service>
       <Service></Service>
       <Service></Service>
@@ -16,7 +16,7 @@ const Home = () => {
       <div className="lg:h-72 flex items-center justify-center">
         <BSummary></BSummary>
       </div>
-      <div className="lg:flex w-5/6 mx-auto">
+      <div className="lg:flex w-5/6 mx-auto gap-4">
       <Review></Review>
       <Review></Review>
       <Review></Review>

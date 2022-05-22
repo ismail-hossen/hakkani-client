@@ -5,21 +5,21 @@ const BSummary = () => {
       <div className="stats lg:h-60 w-4/5 stats-vertical lg:stats-horizontal shadow">
   
       <div className="stat place-items-center">
-        <div className="stat-title">Downloads</div>
-        <div className="stat-value">31K</div>
-        <div className="stat-desc">Jan 1st - Feb 1st</div>
+        <div className="stat-title">Customers</div>
+        <div className="stat-value">100+</div>
+        <div className="stat-desc">we served 100+ customers</div>
       </div>
       
       <div className="stat place-items-center">
-        <div className="stat-title">New Users</div>
-        <div className="stat-value">4,200</div>
-        <div className="stat-desc">↗︎ 400 (22%)</div>
+        <div className="stat-title">Tools</div>
+        <div className="stat-value">50+</div>
+        <div className="stat-desc">our company's have in 50+ tools</div>
       </div>
       
       <div className="stat place-items-center">
-        <div className="stat-title">New Registers</div>
-        <div className="stat-value">1,200</div>
-        <div className="stat-desc">↘︎ 90 (14%)</div>
+        <div className="stat-title">Reviews</div>
+        <div className="stat-value">75+</div>
+        <div className="stat-desc">customers review</div>
       </div>
       
     </div>
