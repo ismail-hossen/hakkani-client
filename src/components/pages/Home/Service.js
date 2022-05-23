@@ -1,24 +1,28 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Service = ({ lg, text, btn }) => {
+const Service = ({ tools }) => {
+  const navigate = useNavigate();
+  const { toolsImage, toolsName, toolsPrice, available, toolsDec, _id ,minOrder } = tools;
   return (
-    <div className={`card lg:w-3/6 ${lg}card-side bg-base-100 shadow-xl`}>
+    <div className={`card bg-base-100 shadow-xl`}>
       <figure>
-        <img
-          src="https://api.lorem.space/image/movie?w=200&h=280"
-          alt="Movie"
-        />
+        <img src={toolsImage} alt="Movie" />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">Tools Name: dodo</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam,
-          facere.
-        </p>
-        <h2>Available Quantity: 750</h2>
-        <h2>{text}</h2>
-        <h2>Price: $100</h2>
-        <div className="card-actions justify-end">{btn}</div>
+        <h2 className="card-title">Tools Name: {toolsName}</h2>
+        <p>{toolsDec}</p>
+        <h2>Available Quantity: {available}</h2>
+        <h2>Minimum Order: {minOrder}</h2>
+        <h2>Price: ${toolsPrice}</h2>
+        <div className="card-actions justify-end">
+          <button
+            onClick={() => navigate(`/place-order/${_id}`)}
+            className="btn btn-primary"
+          >
+            Place Order
+          </button>
+        </div>
       </div>
     </div>
   );
