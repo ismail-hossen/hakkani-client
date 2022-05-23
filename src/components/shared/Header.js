@@ -83,11 +83,15 @@ const Header = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {user ? (
-          <Link to="/" onClick={logout} className="btn">
-            Logout
-          </Link>
-        ) : (
+        {user ? 
+          <>
+            <h2 className="mr-5 text-xl">{user.displayName}</h2> 
+            <Link to="/" onClick={logout} className="btn">
+              Logout
+            </Link>
+            
+          </>
+        : (
           <Link to="/login" className="btn">
             Login
           </Link>
