@@ -7,24 +7,34 @@ import Service from "./Service";
 
 const Home = () => {
   const navigate = useNavigate();
-  const btn = <button onClick={() => navigate("/place-order/:id")} className="btn btn-primary">Place Order</button>;
+  const btn = (
+    <button
+      onClick={() => navigate("/place-order/:id")}
+      className="btn btn-primary"
+    >
+      Place Order
+    </button>
+  );
   return (
-    <div>
+    <>
       <Carousel></Carousel>
-      <div className="flex w-5/6 mx-auto gap-4">
-        <Service lg="lg:" text="Minimum Order: 100" btn={btn}></Service>
-        <Service lg="lg:" text="Minimum Order: 100" btn={btn}></Service>
-        <Service lg="lg:" text="Minimum Order: 100" btn={btn}></Service>
+      <div className="w-5/6 mx-auto">
+        <div className="lg:flex my-16 lg:my-32 lg:gap-6">
+          <Service lg="lg:" text="Minimum Order: 100" btn={btn}></Service>
+          <Service lg="lg:" text="Minimum Order: 100" btn={btn}></Service>
+          <Service lg="lg:" text="Minimum Order: 100" btn={btn}></Service>
+        </div>
+        <div className="my-32 flex items-center justify-center">
+          <BSummary></BSummary>
+        </div>
+        <div className="flex gap-5 my-32">
+          <Review></Review>
+          <Review></Review>
+          <Review></Review>
+          <Review></Review>
+        </div>
       </div>
-      <div className="lg:h-72 flex items-center justify-center">
-        <BSummary></BSummary>
-      </div>
-      <div className="lg:flex w-5/6 mx-auto gap-4">
-        <Review></Review>
-        <Review></Review>
-        <Review></Review>
-      </div>
-    </div>
+    </>
   );
 };
 

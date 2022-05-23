@@ -2,7 +2,7 @@ import React from "react";
 
 const Service = ({ lg, text, btn }) => {
   return (
-    <div className={`card ${lg}card-side bg-base-100 shadow-xl`}>
+    <div className={`card lg:w-3/6 ${lg}card-side bg-base-100 shadow-xl`}>
       <figure>
         <img
           src="https://api.lorem.space/image/movie?w=200&h=280"
@@ -18,9 +18,7 @@ const Service = ({ lg, text, btn }) => {
         <h2>Available Quantity: 750</h2>
         <h2>{text}</h2>
         <h2>Price: $100</h2>
-        <div className="card-actions justify-end">
-          {btn}
-        </div>
+        <div className="card-actions justify-end">{btn}</div>
       </div>
     </div>
   );

@@ -27,8 +27,17 @@ function App() {
           }
         />
 
-        <Route path="/dashboard" element={<Dashboard></Dashboard>}>
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        >
           <Route index element={<MyOrders></MyOrders>}></Route>
+          <Route path="add-a-review"></Route>
+          <Route path="my-profile"></Route>
         </Route>
 
         <Route path="*" element={<NotFound></NotFound>} />
