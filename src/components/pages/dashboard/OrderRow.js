@@ -7,6 +7,7 @@ const OrderRow = ({order,index}) => {
       <td>{order.userName}</td>
       <td>{order.order}</td>
       <td>{order.email}</td>
+      <td><button>Cancel</button></td>
     </tr>
   );
 };

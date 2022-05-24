@@ -1,55 +1,84 @@
 import React, { useEffect } from "react";
 import {
-  useSignInWithEmailAndPassword,
+  useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
+  useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.config";
 
-const Login = () => {
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword, user2, loading2, error2] =
-    useSignInWithEmailAndPassword(auth);
-
+const Signup = () => {
+  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
 
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
   const navigate = useNavigate();
-  const location = useLocation();
-  let from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
-    if (user || user2) {
-      navigate(from, { replace: true });
+    if (user || gUser) {
+      navigate("/");
     }
-  }, [user, user2, from, navigate]);
+  }, [user, gUser, navigate]);
 
-  if (loading || loading2) {
+  let signInError;
+
+  if (loading || gLoading || updating) {
     return <h1>loading...</h1>;
   }
-  
-  let signInError;
-  if (error || error2) {
+
+  if (error || gError || updateError) {
     signInError = (
       <p className="text-red-500">
-        <span>{error?.message || error2?.message}</span>
+        <small>
+          {error?.message || gError?.message || updateError?.message}
+        </small>
       </p>
     );
   }
-  const onSubmit = (data) => {
-    signInWithEmailAndPassword(data.email, data.password);
+
+  const onSubmit = async (data) => {
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name });
   };
+
   return (
     <div className="w-full place-items-center bg-cover bg-center grid min-h-full bg-base-100">
-      <h1 className="text-5xl font-bold my-10">Login now!</h1>
+      <h1 className="text-5xl font-bold my-10">Sign Up!</h1>
       <div className="hero-content flex-col lg:flex-row lg:mt-10 lg:mb-32">
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <div className="card-body">
             <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  className="input input-bordered w-full max-w-xs"
+                  {...register("name", {
+                    required: {
+                      value: true,
+                      message: "Name is Required",
+                    },
+                  })}
+                />
+                <label className="label">
+                  {errors.name?.type === "required" && (
+                    <span className="label-text-alt text-red-500">
+                      {errors.name.message}
+                    </span>
+                  )}
+                </label>
+              </div>
+
               <div className="form-control w-full max-w-xs">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -101,14 +130,10 @@ const Login = () => {
                     },
                   })}
                 />
-
                 <label className="label">
-                  <Link to="/signup" className="label-text-alt link link-hover">
-                    Haven't account? please signup.
+                  <Link to="/login" className="label-text-alt link link-hover">
+                    Already have an account? please login.
                   </Link>
-                  <a href="#" className="label-text-alt link link-hover">
-                    Forgot password?
-                  </a>
                 </label>
                 <label className="label">
                   {errors.password?.type === "required" && (
@@ -125,9 +150,10 @@ const Login = () => {
               </div>
 
               {signInError}
+
               <div className="form-control mt-6">
                 <button type="submit" className="btn btn-primary">
-                  Login
+                  Sign Up
                 </button>
               </div>
             </form>
@@ -149,4 +175,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
