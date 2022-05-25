@@ -2,7 +2,7 @@ import React from 'react';
 
 const BSummary = () => {
     return (
-      <div className="stats lg:h-60 w-4/5 stats-vertical lg:stats-horizontal shadow">
+      <div className="stats lg:h-60 w-5/6 stats-vertical lg:stats-horizontal shadow">
   
       <div className="stat place-items-center">
         <div className="stat-title">Customers</div>

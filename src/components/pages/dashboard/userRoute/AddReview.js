@@ -1,0 +1,96 @@
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const AddReview = () => {
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      radio: 5,
+    },
+  });
+  const onSubmit = (data) => {
+    const review = { rating: data?.radio, feedback: data?.feedback };
+    fetch("http://localhost:5000/review", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(review),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          toast.success(data.massage);
+        }
+      });
+  };
+  return (
+    <div className="w-full place-items-center bg-cover bg-center grid bg-base-100">
+      <h1 className="text-5xl font-bold my-10">Login now!</h1>
+      <div className="hero-content flex-col lg:flex-row lg:mt-10 lg:mb-32">
+        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+          <div className="card-body">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Rating</span>
+                </label>
+                <div className="rating rating-md">
+                  <input
+                    className="mask mask-star-2 bg-orange-400"
+                    {...register("radio")}
+                    type="radio"
+                    value="1"
+                  />
+                  <input
+                    className="mask mask-star-2 bg-orange-400"
+                    {...register("radio")}
+                    type="radio"
+                    value="2"
+                  />
+                  <input
+                    className="mask mask-star-2 bg-orange-400"
+                    {...register("radio")}
+                    type="radio"
+                    value="3"
+                  />
+                  <input
+                    className="mask mask-star-2 bg-orange-400"
+                    {...register("radio")}
+                    type="radio"
+                    value="4"
+                  />
+                  <input
+                    className="mask mask-star-2 bg-orange-400"
+                    {...register("radio")}
+                    type="radio"
+                    value="5"
+                  />
+                </div>
+              </div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">FeedBack</span>
+                </label>
+                <input
+                  type="textarea"
+                  placeholder="Write your feedback..."
+                  className="input input-bordered w-full h-24 max-w-xs"
+                  {...register("feedback")}
+                />
+              </div>
+
+              <div className="form-control mt-6">
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              </div>
+              <ToastContainer />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AddReview;

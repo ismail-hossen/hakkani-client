@@ -3,9 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 const Service = ({ tools }) => {
   const navigate = useNavigate();
-  const { toolsImage, toolsName, toolsPrice, available, toolsDec, _id ,minOrder } = tools;
+  const {
+    toolsImage,
+    toolsName,
+    toolsPrice,
+    available,
+    toolsDec,
+    _id,
+    minOrder,
+  } = tools;
   return (
-    <div className={`card bg-base-100 shadow-xl`}>
+    <div className="mb-5 card bg-base-100 shadow-xl">
       <figure>
         <img src={toolsImage} alt="Movie" />
       </figure>

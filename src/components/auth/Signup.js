@@ -7,6 +7,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.config";
+import useJwtToken from "../hooks/useJwtToken";
 
 const Signup = () => {
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
@@ -21,29 +22,13 @@ const Signup = () => {
   const [updateProfile, loading3, error3] = useUpdateProfile(auth);
   const navigate = useNavigate();
 
+  // put user for user collection and token
+  const token = useJwtToken(user || user2);
   useEffect(() => {
-    if (user || user2) {
+    if (token) {
       navigate("/");
     }
-  }, [user, user2, navigate]);
-
-  // post user for user collection
-  useEffect(() => {
-    const email = user?.user?.email || user2?.user.email;
-    if (email) {
-      fetch("http://localhost:5000/users", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ email: email }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
-    }
-  }, [user , user2]);
+  }, [token, navigate]);
 
   let signInError;
 
@@ -54,9 +39,7 @@ const Signup = () => {
   if (error || error2 || error3) {
     signInError = (
       <p className="text-red-500">
-        <small>
-          {error?.message || error2?.message || error3?.message}
-        </small>
+        <small>{error?.message || error2?.message || error3?.message}</small>
       </p>
     );
   }

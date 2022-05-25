@@ -6,6 +6,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import auth from "../../firebase.config";
+import useJwtToken from "../hooks/useJwtToken";
 
 const Login = () => {
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
@@ -22,29 +23,14 @@ const Login = () => {
   const location = useLocation();
   let from = location.state?.from?.pathname || "/";
 
+  // put user for user collection and token 
+  const token = useJwtToken(user || user2);
+
   useEffect(() => {
-    if (user || user2) {
+    if (token) {
       navigate(from, { replace: true });
     }
-  }, [user, user2, from, navigate]);
-
-  // post user for user collection
-  useEffect(() => {
-    const email = user?.user?.email || user2?.user.email;
-    if (email) {
-      fetch("http://localhost:5000/users", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ email: email }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
-    }
-  }, [user , user2]);
+  }, [token, from, navigate]);
 
   if (loading || loading2) {
     return <h1>loading...</h1>;

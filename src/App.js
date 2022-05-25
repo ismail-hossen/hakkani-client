@@ -15,6 +15,7 @@ import auth from "./firebase.config";
 import MakeAdmin from "./components/pages/dashboard/adminRoute/MakeAdmin";
 import MyOrders from "./components/pages/dashboard/userRoute/MyOrders";
 import ManageOrders from "./components/pages/dashboard/adminRoute/ManageOrders";
+import AddReview from "./components/pages/dashboard/userRoute/AddReview";
 
 function App() {
   const [adminState, setAdminState] = useState([]);
@@ -30,22 +31,10 @@ function App() {
   }
 
   const publicRoute = [
-    {
-      path: "/",
-      Element: Home,
-    },
-    {
-      path: "/home",
-      Element: Home,
-    },
-    {
-      path: "/login",
-      Element: Login,
-    },
-    {
-      path: "/signup",
-      Element: Signup,
-    },
+    { path: "/", Element: Home },
+    { path: "/home", Element: Home },
+    { path: "/login", Element: Login },
+    { path: "/signup", Element: Signup },
   ];
 
   return (
@@ -80,8 +69,8 @@ function App() {
             element={
               adminState?.role === "admin" ? <ManageOrders /> : <MyOrders />
             }
-          ></Route>
-          <Route path="add-a-review"></Route>
+          />
+          <Route path="add-a-review" element={<AddReview />}></Route>
           <Route path="my-profile"></Route>
         </Route>
         <Route path="*" element={<NotFound></NotFound>} />
