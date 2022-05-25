@@ -13,6 +13,7 @@ const Home = () => {
     fetch("http://localhost:5000/tools-collection").then((res) => res.json())
   );
 
+  
   if(loading){
     return <h1>loading...</h1>
   }

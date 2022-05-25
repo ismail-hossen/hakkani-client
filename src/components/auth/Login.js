@@ -28,10 +28,28 @@ const Login = () => {
     }
   }, [user, user2, from, navigate]);
 
+  // post user for user collection
+  useEffect(() => {
+    const email = user?.user?.email || user2?.user.email;
+    if (email) {
+      fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ email: email }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  }, [user , user2]);
+
   if (loading || loading2) {
     return <h1>loading...</h1>;
   }
-  
+
   let signInError;
   if (error || error2) {
     signInError = (

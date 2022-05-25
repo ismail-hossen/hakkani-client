@@ -9,35 +9,53 @@ import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.config";
 
 const Signup = () => {
-  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [createUserWithEmailAndPassword, user, loading, error] =
+  const [createUserWithEmailAndPassword, user2, loading2, error2] =
     useCreateUserWithEmailAndPassword(auth);
 
-  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  const [updateProfile, loading3, error3] = useUpdateProfile(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user || gUser) {
+    if (user || user2) {
       navigate("/");
     }
-  }, [user, gUser, navigate]);
+  }, [user, user2, navigate]);
+
+  // post user for user collection
+  useEffect(() => {
+    const email = user?.user?.email || user2?.user.email;
+    if (email) {
+      fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ email: email }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  }, [user , user2]);
 
   let signInError;
 
-  if (loading || gLoading || updating) {
+  if (loading || loading2 || loading3) {
     return <h1>loading...</h1>;
   }
 
-  if (error || gError || updateError) {
+  if (error || error2 || error3) {
     signInError = (
       <p className="text-red-500">
         <small>
-          {error?.message || gError?.message || updateError?.message}
+          {error?.message || error2?.message || error3?.message}
         </small>
       </p>
     );
