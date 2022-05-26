@@ -16,6 +16,7 @@ import MakeAdmin from "./components/pages/dashboard/adminRoute/MakeAdmin";
 import MyOrders from "./components/pages/dashboard/userRoute/MyOrders";
 import ManageOrders from "./components/pages/dashboard/adminRoute/ManageOrders";
 import AddReview from "./components/pages/dashboard/userRoute/AddReview";
+import Payments from "./components/payments/Payments";
 
 function App() {
   const [adminState, setAdminState] = useState([]);
@@ -45,7 +46,7 @@ function App() {
         {publicRoute.map(({ path, Element }, index) => (
           <Route key={index} path={path} element={<Element />} />
         ))}
-
+        <Route path="/payment" element={<Payments />}></Route>
         <Route
           path="/place-order/:id"
           element={
@@ -63,7 +64,9 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route path="make-admin" element={<MakeAdmin></MakeAdmin>} />
+          {adminState?.role === "admin" && (
+            <Route path="make-admin" element={<MakeAdmin></MakeAdmin>} />
+          )}
           <Route
             index
             element={

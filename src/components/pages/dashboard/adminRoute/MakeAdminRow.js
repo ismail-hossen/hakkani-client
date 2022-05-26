@@ -1,14 +1,19 @@
 import React from "react";
 
-const MakeAdminRow = ({ index, user }) => {
+const MakeAdminRow = ({ index, user, refetch }) => {
   const handleUser = (id) => {
-    console.log(id);
-
     fetch(`http://localhost:5000/users/${id}`, {
       method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          refetch();
+        }
+      });
   };
   return (
     <tr>

@@ -2,23 +2,20 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
 import auth from "../../../../firebase.config";
+import useJwtVerify from "../../../hooks/useJwtVerify";
 import OrderRow from "./OrderRow";
 
 const MyOrders = () => {
   const [user, userLoading] = useAuthState(auth);
-
-  const {
-    data: orders,
-    loading,
-    refetch,
-  } = useQuery(["OCollection", user.email], () =>
-    fetch(`http://localhost:5000/order-collection/${user.email}`).then((res) =>
-      res.json()
-    )
-  );
-
-  const deleteAllOrder = (email) => {
-    fetch(`http://localhost:5000/delete-order?email=${email}`, {
+  const fetchData = async () => {
+    const { data } = await useJwtVerify.get(
+      `http://localhost:5000/order-collection/${user?.email}`
+    );
+    return data;
+  };
+  const { data: orders, loading, refetch } = useQuery("OCollection", fetchData);
+  const deleteAllOrder = () => {
+    fetch(`http://localhost:5000/delete-order?email=${user?.email}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -39,9 +36,10 @@ const MyOrders = () => {
             <th>Name</th>
             <th>Order</th>
             <th>Email</th>
+            <th>Payment</th>
             <th>
               <button
-                onClick={() => deleteAllOrder(user?.email)}
+                onClick={deleteAllOrder}
                 className="btn btn-square btn-outline"
               >
                 <svg

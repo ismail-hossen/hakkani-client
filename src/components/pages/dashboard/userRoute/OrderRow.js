@@ -1,15 +1,19 @@
 import React from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 const OrderRow = ({ order, index }) => {
   const deleteUser = (id) => {
-    console.log(id);
     const confirmDelete = window.confirm("Are you sure for cancel an order?");
     if (confirmDelete) {
       fetch(`http://localhost:5000/order-collection/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => {
+          if (data.deletedCount > 0) {
+            toast.success("successfully deleted");
+          }
+        });
     }
   };
   return (
@@ -18,6 +22,7 @@ const OrderRow = ({ order, index }) => {
       <td>{order.userName}</td>
       <td>{order.order}</td>
       <td>{order.email}</td>
+      <td>pay</td>
       <td>
         <button
           onClick={() => deleteUser(order._id)}
@@ -38,6 +43,7 @@ const OrderRow = ({ order, index }) => {
             />
           </svg>
         </button>
+        <ToastContainer/>
       </td>
     </tr>
   );
