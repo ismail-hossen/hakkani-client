@@ -9,20 +9,17 @@ const stripePromise = loadStripe(
 
 const Payments = () => {
   return (
-    <div className="card w-4/5 mx-auto lg:card-side bg-base-100 shadow-xl">
-      <figure>
+    <div className="card w-3/6 mx-auto lg:card-side bg-base-100 shadow-xl">
+      <figure className="w/50">
         <img
           src="https://api.lorem.space/image/album?w=400&h=400"
           alt="Album"
         />
       </figure>
-      <div className="card-body">
-        <Elements stripe={stripePromise}><CheckoutForm></CheckoutForm></Elements>
-        <h2 className="card-title">New album is released!</h2>
-        <p>Click the button to listen on Spotiwhy app.</p>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Listen</button>
-        </div>
+      <div className="card-body w-50">
+        <Elements stripe={stripePromise}>
+          <CheckoutForm></CheckoutForm>
+        </Elements>
       </div>
     </div>
   );
