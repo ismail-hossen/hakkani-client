@@ -46,6 +46,7 @@ function App() {
         {publicRoute.map(({ path, Element }, index) => (
           <Route key={index} path={path} element={<Element />} />
         ))}
+        <Route path="/payment/:id" element={<Payments />}></Route>
         <Route path="/payment" element={<Payments />}></Route>
         <Route
           path="/place-order/:id"

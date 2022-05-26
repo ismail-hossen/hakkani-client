@@ -7,6 +7,7 @@ import OrderRow from "./OrderRow";
 
 const MyOrders = () => {
   const [user, userLoading] = useAuthState(auth);
+
   const fetchData = async () => {
     const { data } = await useJwtVerify.get(
       `http://localhost:5000/order-collection/${user?.email}`
@@ -14,6 +15,7 @@ const MyOrders = () => {
     return data;
   };
   const { data: orders, loading, refetch } = useQuery("OCollection", fetchData);
+
   const deleteAllOrder = () => {
     fetch(`http://localhost:5000/delete-order?email=${user?.email}`, {
       method: "DELETE",

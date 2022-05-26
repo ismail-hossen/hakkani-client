@@ -5,6 +5,8 @@ import auth from "../../firebase.config";
 
 const Purchase = () => {
   const [tool, setTool] = useState([]);
+  const [purchase, setPurchase] = useState(false);
+  const [orderId, setOrderId] = useState("");
   const [order, setOrder] = useState({
     order: 0,
     number: null,
@@ -14,6 +16,7 @@ const Purchase = () => {
     tool;
   const { id } = useParams();
   const [user, loading] = useAuthState(auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:5000/tools-collection")
@@ -24,6 +27,8 @@ const Purchase = () => {
         setOrder({ order: oneTool.minOrder });
       });
   }, [id]);
+
+  const paymentRoute = () => navigate(`/payment/${orderId}`);
 
   if (loading) {
     return <h1>loading...</h1>;
@@ -40,15 +45,17 @@ const Purchase = () => {
     }
   };
 
-  const onSubmit = (user, order) => {
+  const onSubmit = (user, order, price) => {
     const userInfo = {
+      price: price,
       email: user.email,
       address: order.address,
       userName: user.displayName,
       order: order.order,
       number: order.number,
     };
-    console.log(userInfo);
+    console.log('price', price);
+    
     fetch("http://localhost:5000/order-collection", {
       method: "POST",
       headers: {
@@ -57,7 +64,12 @@ const Purchase = () => {
       body: JSON.stringify(userInfo),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (data.acknowledged) {
+          setOrderId(data.insertedId);
+          setPurchase(true);
+        }
+      });
   };
 
   return (
@@ -127,13 +139,19 @@ const Purchase = () => {
                 {(order.order < minOrder && "Please purchase minimum order!") ||
                   (order.order > available && "Don't available much tool!")}
               </p>
-              <button
-                onClick={() => onSubmit(user, order)}
-                disabled={order.order < minOrder || order.order > available}
-                className="btn btn-primary"
-              >
-                Purchase
-              </button>{" "}
+              {purchase ? (
+                <button className="btn btn-primary" onClick={paymentRoute}>
+                  Please Pay Now
+                </button>
+              ) : (
+                <button
+                  onClick={() => onSubmit(user, order, toolsPrice)}
+                  disabled={order.order < minOrder || order.order > available}
+                  className="btn btn-primary"
+                >
+                  Order
+                </button>
+              )}
             </div>
           </div>
         </div>

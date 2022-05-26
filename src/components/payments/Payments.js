@@ -1,24 +1,37 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import useJwtVerify from "../hooks/useJwtVerify";
 import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(
-  "pk_test_51IhDlMHEs92aEw5xvqGOPKSB2lSliO2Jcubx10tBweogfBiNSh0eG5K4mvnUbFWwP20b439IdXEBozoHpCVR9uPS00RCh6tZfS"
+  `process.env.publishable_key`
 );
 
 const Payments = () => {
+  const { id } = useParams();
+  const fetching = async () => {
+    const { data } = await useJwtVerify.get(
+      `http://localhost:5000/find-one-order/${id}`
+    );
+    return data[0];
+  };
+  const { data: orders, loading, refetch } = useQuery("OCollection", fetching);
+
+  if (loading) {
+    return <h1>loading...</h1>;
+  }
+
   return (
     <div className="card w-3/6 mx-auto lg:card-side bg-base-100 shadow-xl">
-      <figure className="w/50">
-        <img
-          src="https://api.lorem.space/image/album?w=400&h=400"
-          alt="Album"
-        />
-      </figure>
+      <div>
+        <p>Please pay: ${orders?.price}</p>
+      </div>
       <div className="card-body w-50">
         <Elements stripe={stripePromise}>
-          <CheckoutForm></CheckoutForm>
+          <CheckoutForm order={orders}></CheckoutForm>
         </Elements>
       </div>
     </div>
