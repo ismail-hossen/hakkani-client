@@ -6,7 +6,7 @@ import MakeAdminRow from "./MakeAdminRow";
 const MakeAdmin = () => {
   // const [users, setUsers] = useState([]);
   const fetchData = async () => {
-    const { data } = await useJwtVerify.get("http://localhost:5000/users");
+    const { data } = await useJwtVerify.get("https://pure-refuge-14003.herokuapp.com/users");
     return data;
   };
   const { data: users, loading, refetch } = useQuery("OCollection", fetchData);

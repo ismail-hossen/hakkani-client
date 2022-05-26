@@ -10,22 +10,20 @@ const MyOrders = () => {
 
   const fetchData = async () => {
     const { data } = await useJwtVerify.get(
-      `http://localhost:5000/order-collection/${user?.email}`
+      `https://pure-refuge-14003.herokuapp.com/order-collection/${user?.email}`
     );
     return data;
   };
   const { data: orders, loading, refetch } = useQuery("OCollection", fetchData);
 
   const deleteAllOrder = () => {
-    fetch(`http://localhost:5000/delete-order?email=${user?.email}`, {
+    fetch(`https://pure-refuge-14003.herokuapp.com/delete-order?email=${user?.email}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        refetch();
-      });
+      .then((data) => console.log(data));
   };
+  refetch()
   if (loading || userLoading) {
     return <h1>loading...</h1>;
   }
@@ -38,6 +36,7 @@ const MyOrders = () => {
             <th>Name</th>
             <th>Order</th>
             <th>Email</th>
+            <th>Transaction ID</th>
             <th>Payment</th>
             <th>
               <button
@@ -63,9 +62,10 @@ const MyOrders = () => {
           </tr>
         </thead>
         <tbody>
-          {orders?.map((order, index) => (
-            <OrderRow key={order._id} index={index} order={order} />
-          ))}
+          {orders &&
+            orders?.map((order, index) => (
+              <OrderRow key={order._id} index={index} order={order} />
+            ))}
         </tbody>
       </table>
     </div>

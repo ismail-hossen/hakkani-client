@@ -3,12 +3,17 @@ import { useQuery } from "react-query";
 import OrderRow from "../userRoute/OrderRow";
 
 const ManageOrders = () => {
-  const { data: allOrders, loading } = useQuery("OCollection", () =>
-    fetch("http://localhost:5000/users").then((res) => res.json())
+  const {
+    data: allOrders,
+    loading,
+    refetch,
+  } = useQuery("OCollection", () =>
+    fetch("https://pure-refuge-14003.herokuapp.com/users").then((res) => res.json())
   );
   if (loading) {
     return <h1>loading...</h1>;
   }
+  refetch();
 
   return (
     <div className="overflow-x-auto w-5/6 mx-auto">
@@ -23,9 +28,10 @@ const ManageOrders = () => {
           </tr>
         </thead>
         <tbody>
-          {allOrders?.order.map((order, index) => (
-            <OrderRow key={order._id} index={index} order={order} />
-          ))}
+          {allOrders?.order &&
+            allOrders?.order.map((order, index) => (
+              <OrderRow key={order._id} index={index} order={order} />
+            ))}
         </tbody>
       </table>
     </div>

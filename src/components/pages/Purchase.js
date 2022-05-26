@@ -54,8 +54,6 @@ const Purchase = () => {
       order: order.order,
       number: order.number,
     };
-    console.log('price', price);
-    
     fetch("http://localhost:5000/order-collection", {
       method: "POST",
       headers: {

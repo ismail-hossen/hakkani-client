@@ -18,10 +18,7 @@ const CheckoutForm = ({ id }) => {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setOrderData(data[0]);
-      });
+      .then((data) => setOrderData(data[0]));
   }, [id]);
   const price = orderData.price;
 
@@ -94,7 +91,6 @@ const CheckoutForm = ({ id }) => {
         .then((res) => res.json())
         .then((data) => {
           setProcessing(false);
-          console.log(data);
         });
     }
   };
