@@ -1,7 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
 
-const CheckoutForm = ({ order }) => {
+const CheckoutForm = ({ id }) => {
   const [cardError, setCardError] = useState("");
   const [success, setSuccess] = useState("");
   const [processing, setProcessing] = useState(false);
@@ -9,7 +9,21 @@ const CheckoutForm = ({ order }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState("");
-  const price = order?.price;
+  const [orderData, setOrderData] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/find-one-order/${id}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setOrderData(data[0]);
+      });
+  }, [id]);
+  const price = orderData.price;
 
   useEffect(() => {
     fetch("http://localhost:5000/create-payment-intent", {
@@ -49,8 +63,8 @@ const CheckoutForm = ({ order }) => {
         payment_method: {
           card: card,
           billing_details: {
-            name: order?.userName,
-            email: order?.email,
+            name: orderData.userName,
+            email: orderData.email,
           },
         },
       });
@@ -66,10 +80,10 @@ const CheckoutForm = ({ order }) => {
 
       //store payment on database
       const payment = {
-        orderId: order?._id,
+        orderId: orderData?._id,
         transactionId: paymentIntent.id,
       };
-      fetch(`http://localhost:5000/payment/${order?._id}`, {
+      fetch(`http://localhost:5000/payment/${orderData?._id}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",

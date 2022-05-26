@@ -7,7 +7,7 @@ import useJwtVerify from "../hooks/useJwtVerify";
 import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(
-  `process.env.publishable_key`
+  "pk_test_51IhDlMHEs92aEw5xvqGOPKSB2lSliO2Jcubx10tBweogfBiNSh0eG5K4mvnUbFWwP20b439IdXEBozoHpCVR9uPS00RCh6tZfS"
 );
 
 const Payments = () => {
@@ -31,7 +31,7 @@ const Payments = () => {
       </div>
       <div className="card-body w-50">
         <Elements stripe={stripePromise}>
-          <CheckoutForm order={orders}></CheckoutForm>
+          <CheckoutForm id={id}></CheckoutForm>
         </Elements>
       </div>
     </div>
