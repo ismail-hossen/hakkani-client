@@ -8,7 +8,7 @@ const ManageOrders = () => {
     loading,
     refetch,
   } = useQuery("OCollection", () =>
-    fetch("https://pure-refuge-14003.herokuapp.com/users").then((res) => res.json())
+    fetch("http://localhost:5000/users").then((res) => res.json())
   );
   if (loading) {
     return <h1>loading...</h1>;

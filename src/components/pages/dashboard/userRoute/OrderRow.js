@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 const OrderRow = ({ order, index }) => {
   const navigate = useNavigate();
   const deleteOrder = (id) => {
-    fetch(`https://pure-refuge-14003.herokuapp.com/order-collection/${id}`, {
+    fetch(`http://localhost:5000/order-collection/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

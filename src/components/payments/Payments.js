@@ -18,7 +18,7 @@ const Payments = () => {
     );
     return data[0];
   };
-  const { data: orders, loading, refetch } = useQuery("OCollection", fetching);
+  const { data: orders, loading } = useQuery("OCollection", fetching);
 
   if (loading) {
     return <h1>loading...</h1>;

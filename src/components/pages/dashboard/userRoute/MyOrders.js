@@ -10,14 +10,14 @@ const MyOrders = () => {
 
   const fetchData = async () => {
     const { data } = await useJwtVerify.get(
-      `https://pure-refuge-14003.herokuapp.com/order-collection/${user?.email}`
+      `http://localhost:5000/order-collection/${user?.email}`
     );
     return data;
   };
   const { data: orders, loading, refetch } = useQuery("OCollection", fetchData);
 
   const deleteAllOrder = () => {
-    fetch(`https://pure-refuge-14003.herokuapp.com/delete-order?email=${user?.email}`, {
+    fetch(`http://localhost:5000/delete-order?email=${user?.email}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

@@ -17,12 +17,13 @@ import MyOrders from "./components/pages/dashboard/userRoute/MyOrders";
 import ManageOrders from "./components/pages/dashboard/adminRoute/ManageOrders";
 import AddReview from "./components/pages/dashboard/userRoute/AddReview";
 import Payments from "./components/payments/Payments";
+import AddAProduct from "./components/pages/dashboard/adminRoute/AddAProduct";
 
 function App() {
   const [adminState, setAdminState] = useState([]);
   const [user, loading] = useAuthState(auth);
   useEffect(() => {
-    fetch(`http://localhost:5000/admin/${user?.email}`)
+    fetch(`https://pure-refuge-14003.herokuapp.com/admin/${user?.email}`)
       .then((res) => res.json())
       .then((data) => setAdminState(data[0]));
   }, [user]);
@@ -66,8 +67,12 @@ function App() {
           }
         >
           {adminState?.role === "admin" && (
-            <Route path="make-admin" element={<MakeAdmin></MakeAdmin>} />
+            <>
+              <Route path="make-admin" element={<MakeAdmin />} />
+              <Route path="add-a-product" element={<AddAProduct />} />
+            </>
           )}
+
           <Route
             index
             element={

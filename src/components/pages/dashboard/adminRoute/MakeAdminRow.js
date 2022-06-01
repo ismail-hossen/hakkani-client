@@ -2,7 +2,7 @@ import React from "react";
 
 const MakeAdminRow = ({ index, user, refetch }) => {
   const handleUser = (id) => {
-    fetch(`https://pure-refuge-14003.herokuapp.com/users/${id}`, {
+    fetch(`http://localhost:5000/users/${id}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

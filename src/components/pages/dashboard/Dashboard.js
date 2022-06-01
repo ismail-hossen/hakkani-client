@@ -7,7 +7,7 @@ const Dashboard = () => {
   const [adminState, setAdminState] = useState([]);
   const [user, loading] = useAuthState(auth);
   useEffect(() => {
-    fetch(`https://pure-refuge-14003.herokuapp.com/admin/${user.email}`)
+    fetch(`http://localhost:5000/admin/${user.email}`)
       .then((res) => res.json())
       .then((data) => setAdminState(data[0]));
   }, [user]);

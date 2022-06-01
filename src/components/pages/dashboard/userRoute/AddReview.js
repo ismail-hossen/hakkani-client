@@ -20,7 +20,7 @@ const AddReview = () => {
       name: data?.name,
       photoURL: data.photoURL,
     };
-    fetch("https://pure-refuge-14003.herokuapp.com/review", {
+    fetch("http://localhost:5000/review", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(review),
