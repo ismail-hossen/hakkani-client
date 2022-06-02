@@ -12,15 +12,15 @@ const Home = () => {
   const { data: reviews, loading2 } = useQuery("RCollection", () =>
     fetch("http://localhost:5000/review").then((res) => res.json())
   );
+  const sliceReview = reviews?.slice(-6);
   if (loading || loading2) {
     return <h1>loading...</h1>;
   }
-
   return (
     <>
       <Carousel></Carousel>
       <div className="w-5/6 mx-auto">
-        <div className="grid grid-cols-3 my-16 lg:my-32 lg:gap-5">
+        <div className="lg:grid grid-cols-3 my-16 lg:my-32 lg:gap-5">
           {tools?.map((tool) => (
             <Service key={tool._id} tools={tool} />
           ))}
@@ -28,8 +28,8 @@ const Home = () => {
         <div className="my-32 flex items-center justify-center">
           <BSummary></BSummary>
         </div>
-        <div className="lg:grid grid-cols-5 lg:gap-5 lg:my-32">
-          {reviews?.map((review) => (
+        <div className="lg:grid grid-cols-6 lg:gap-5 lg:my-32">
+          {sliceReview?.map((review) => (
             <Review key={review._id} review={review} />
           ))}
         </div>
