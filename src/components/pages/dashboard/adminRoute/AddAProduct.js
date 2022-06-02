@@ -3,10 +3,19 @@ import { useForm } from "react-hook-form";
 
 const AddAProduct = () => {
   const { register, handleSubmit, reset } = useForm();
+  const imageStorage = "cc77d53eda2a115ad4dd2b379aff0d85";
+  const onSubmit = async (data) => {
+    const image = data.ProductImage[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    fetch(`https://api.imgbb.com/1/upload?key=${imageStorage}`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("data", data));
 
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
+    // reset();
   };
 
   return (
