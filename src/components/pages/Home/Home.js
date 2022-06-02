@@ -20,7 +20,7 @@ const Home = () => {
     <>
       <Carousel></Carousel>
       <div className="w-5/6 mx-auto">
-        <div className="lg:flex my-16 lg:my-32 lg:gap-5">
+        <div className="grid grid-cols-3 my-16 lg:my-32 lg:gap-5">
           {tools?.map((tool) => (
             <Service key={tool._id} tools={tool} />
           ))}

@@ -1,10 +1,16 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
+import auth from "../../../../firebase.config";
 
 const AddAProduct = () => {
+  const [user, loading] = useAuthState(auth);
   const { register, handleSubmit, reset } = useForm();
   const imageStorage = "cc77d53eda2a115ad4dd2b379aff0d85";
   const onSubmit = async (data) => {
+    console.log(data);
+
     const image = data.ProductImage[0];
     const formData = new FormData();
     formData.append("image", image);
@@ -13,11 +19,44 @@ const AddAProduct = () => {
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => console.log("data", data));
-
-    // reset();
+      .then((imageUp) => {
+        if (imageUp.success) {
+          const image = imageUp.data.url;
+          const product = {
+            userName: user.displayName,
+            toolsName: data.productName,
+            email: user.email,
+            available: data.available,
+            toolsPrice: data.price,
+            minOrder: data.minOrder,
+            toolsImage: image,
+            toolsDec: data.description,
+          };
+          // send product data in database
+          fetch("http://localhost:5000/tools-collection", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: JSON.stringify(product),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                toast.success("Added successfully");
+                reset();
+              } else {
+                toast.error("Failed to add the product");
+              }
+            });
+        }
+      });
   };
 
+  if (loading) {
+    return <h5>loading...</h5>;
+  }
   return (
     <div className="bg-cover bg-center bg-base-100 flex flex-col h-auto my-20 justify-center items-center">
       <h1 className="text-5xl font-bold">Add A Product!</h1>
@@ -32,7 +71,7 @@ const AddAProduct = () => {
                 type="text"
                 placeholder="Product Name"
                 className="input input-bordered w-full"
-                {...register("ProductName")}
+                {...register("productName")}
               />
             </div>
             <div className="flex gap-2">
@@ -44,7 +83,7 @@ const AddAProduct = () => {
                   type="number"
                   placeholder="Available"
                   className="input input-bordered w-full max-w-xs"
-                  {...register("Available")}
+                  {...register("available")}
                 />
               </div>
 
@@ -56,7 +95,7 @@ const AddAProduct = () => {
                   type="number"
                   placeholder="Price"
                   className="input input-bordered w-full max-w-xs"
-                  {...register("Price")}
+                  {...register("price")}
                 />
               </div>
               <div className="form-control w-full max-w-xs">
@@ -67,7 +106,7 @@ const AddAProduct = () => {
                   type="number"
                   placeholder="Min Order"
                   className="input input-bordered w-full max-w-xs"
-                  {...register("MinOrder")}
+                  {...register("minOrder")}
                 />
               </div>
             </div>
@@ -80,7 +119,7 @@ const AddAProduct = () => {
               <textarea
                 placeholder="Write Here"
                 className="input input-bordered w-full"
-                {...register("Description")}
+                {...register("description")}
               />
             </div>
 
@@ -100,6 +139,7 @@ const AddAProduct = () => {
               </button>
             </div>
           </form>
+          <ToastContainer />
         </div>
       </div>
     </div>
