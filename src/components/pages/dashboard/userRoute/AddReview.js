@@ -83,7 +83,7 @@ const AddReview = () => {
                 <label className="label">
                   <span className="label-text">FeedBack</span>
                 </label>
-                <input
+                <textarea
                   type="textarea"
                   placeholder="Write your feedback..."
                   className="input input-bordered w-full h-24 max-w-xs"

@@ -23,7 +23,8 @@ const MyOrders = () => {
       .then((res) => res.json())
       .then((data) => console.log(data));
   };
-  refetch()
+
+  refetch();
   if (loading || userLoading) {
     return <h1>loading...</h1>;
   }
@@ -62,8 +63,8 @@ const MyOrders = () => {
           </tr>
         </thead>
         <tbody>
-          {orders &&
-            orders?.map((order, index) => (
+          {orders?.length > 0 &&
+            orders.map((order, index) => (
               <OrderRow key={order._id} index={index} order={order} />
             ))}
         </tbody>
