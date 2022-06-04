@@ -5,7 +5,7 @@ const useJwtToken = (user) => {
   useEffect(() => {
     const email = user?.user?.email;
     if (email) {
-      fetch("http://localhost:5000/users", {
+      fetch("https://pure-refuge-14003.herokuapp.com/users", {
         method: "PUT",
         headers: {
           "content-type": "application/json",

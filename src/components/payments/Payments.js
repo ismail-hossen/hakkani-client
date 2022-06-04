@@ -14,7 +14,7 @@ const Payments = () => {
   const { id } = useParams();
   const fetching = async () => {
     const { data } = await useJwtVerify.get(
-      `http://localhost:5000/find-one-order/${id}`
+      `https://pure-refuge-14003.herokuapp.com/find-one-order/${id}`
     );
     return data[0];
   };

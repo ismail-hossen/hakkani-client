@@ -12,7 +12,7 @@ const CheckoutForm = ({ id }) => {
   const [orderData, setOrderData] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/find-one-order/${id}`, {
+    fetch(`https://pure-refuge-14003.herokuapp.com/find-one-order/${id}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
@@ -23,7 +23,7 @@ const CheckoutForm = ({ id }) => {
   const price = orderData.price;
 
   useEffect(() => {
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://pure-refuge-14003.herokuapp.com/create-payment-intent", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -80,7 +80,7 @@ const CheckoutForm = ({ id }) => {
         orderId: orderData?._id,
         transactionId: paymentIntent.id,
       };
-      fetch(`http://localhost:5000/payment/${orderData?._id}`, {
+      fetch(`https://pure-refuge-14003.herokuapp.com/payment/${orderData?._id}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",

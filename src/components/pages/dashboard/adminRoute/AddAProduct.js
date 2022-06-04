@@ -33,7 +33,7 @@ const AddAProduct = () => {
             toolsDec: data.description,
           };
           // send product data in database
-          fetch("http://localhost:5000/tools-collection", {
+          fetch("https://pure-refuge-14003.herokuapp.com/tools-collection", {
             method: "POST",
             headers: {
               "content-type": "application/json",

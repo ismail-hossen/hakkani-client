@@ -4,7 +4,7 @@ import StarRatings from "react-star-ratings";
 const Review = ({ review }) => {
   const { feedback, rating, name, photoURL } = review;
   return (
-    <div className="card mb-5 bg-base-100 shadow-xl">
+    <div className="card m-2 bg-base-100 shadow-xl">
       <figure className="px-10 pt-10">
         <div className="avatar">
           <div className="w-24 rounded-full">

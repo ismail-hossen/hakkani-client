@@ -6,7 +6,7 @@ const OrderRow = ({ order, index }) => {
   const navigate = useNavigate();
   const goForPayment = (id) => navigate(`/payment/${id}`);
   const deleteOrder = (id) => {
-    fetch(`http://localhost:5000/order-collection/${id}`, {
+    fetch(`https://pure-refuge-14003.herokuapp.com/order-collection/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

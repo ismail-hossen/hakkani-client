@@ -19,7 +19,7 @@ const Purchase = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/tools-collection")
+    fetch("https://pure-refuge-14003.herokuapp.com/tools-collection")
       .then((res) => res.json())
       .then((data) => {
         const oneTool = data?.find((data) => data._id === id);
@@ -54,7 +54,7 @@ const Purchase = () => {
       order: order.order,
       number: order.number,
     };
-    fetch("http://localhost:5000/order-collection", {
+    fetch("https://pure-refuge-14003.herokuapp.com/order-collection", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
